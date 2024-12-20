@@ -38,6 +38,7 @@ const questionContainer = document.querySelector("#questions");
 questions.forEach((question, idx) => {
   const choices = question.choices;
   let markup = `
+  <div>
             <h1 class="question-heading">${question.question}</h1>
             <ul class="options">
               <li class="option"><input type="radio" id="question${
@@ -61,6 +62,7 @@ questions.forEach((question, idx) => {
     choices[3]
   }</li>
             </ul>
+			</div>
     `;
   questionContainer.insertAdjacentHTML("beforeend", markup);
 });
