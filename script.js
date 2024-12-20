@@ -1,8 +1,5 @@
 // "use strict";
 let totalScore = 0;
-// if (localStorage.getItem("score")) {
-//   totalScore = localStorage.getItem("score");
-// }
 
 const questions = [
   {
@@ -60,7 +57,7 @@ questions.forEach((question, idx) => {
     choices[3]
   }</li>
             </ul>
-			</div>
+            </div>
     `;
   questionContainer.insertAdjacentHTML("beforeend", markup);
 });
@@ -71,8 +68,11 @@ const score = document.querySelector("#score");
 const selectedOptions = [];
 
 if (localStorage.getItem("score")) {
+  console.log('getScrore');
   score.textContent = `Your score is ${localStorage.getItem("score")} out of 5.`;
+  totalScore = localStorage.getItem('score');
 }
+
 if (sessionStorage.getItem("progress")) {
   const arr = sessionStorage.getItem("progress").split(",");
   arr.forEach((option) => {
