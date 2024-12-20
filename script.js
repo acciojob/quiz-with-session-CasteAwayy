@@ -37,9 +37,7 @@ const questionContainer = document.querySelector("#questions");
 
 questions.forEach((question, idx) => {
   const choices = question.choices;
-  let markup = `
-  <div>
-            <h1 class="question-heading">${question.question}</h1>
+  let markup = `<div><h1 class="question-heading">${question.question}</h1>
             <ul class="options">
               <li class="option"><input type="radio" id="question${
                 idx + 1
