@@ -1,7 +1,9 @@
-//your JS code here.
+// "use strict";
+let totalScore = 0;
+// if (localStorage.getItem("score")) {
+//   totalScore = localStorage.getItem("score");
+// }
 
-// Do not change code below this line
-// This code will just display the questions to the screen
 const questions = [
   {
     question: "What is the capital of France?",
@@ -20,7 +22,7 @@ const questions = [
   },
   {
     question: "Which is the largest planet in our solar system?",
-    choices: ["Earth", "Jupiter", "Mars"],
+    choices: ["Earth", "Jupiter", "Mars", "Pluto"],
     answer: "Jupiter",
   },
   {
@@ -30,27 +32,79 @@ const questions = [
   },
 ];
 
-// Display the quiz questions and choices
-function renderQuestions() {
-  for (let i = 0; i < questions.length; i++) {
-    const question = questions[i];
-    const questionElement = document.createElement("div");
-    const questionText = document.createTextNode(question.question);
-    questionElement.appendChild(questionText);
-    for (let j = 0; j < question.choices.length; j++) {
-      const choice = question.choices[j];
-      const choiceElement = document.createElement("input");
-      choiceElement.setAttribute("type", "radio");
-      choiceElement.setAttribute("name", `question-${i}`);
-      choiceElement.setAttribute("value", choice);
-      if (userAnswers[i] === choice) {
-        choiceElement.setAttribute("checked", true);
-      }
-      const choiceText = document.createTextNode(choice);
-      questionElement.appendChild(choiceElement);
-      questionElement.appendChild(choiceText);
-    }
-    questionsElement.appendChild(questionElement);
-  }
+const options = document.querySelectorAll("#option");
+const questionContainer = document.querySelector("#questions");
+
+questions.forEach((question, idx) => {
+  const choices = question.choices;
+  let markup = `<div class="question">
+            <h1 class="question-heading">${question.question}</h1>
+            <ul class="options">
+              <li class="option"><input type="radio" id="question${
+                idx + 1
+              }option1" value="${choices[0]}" name="answer${idx}"> ${
+    choices[0]
+  }</li>
+              <li class="option"><input type="radio" id="question${
+                idx + 1
+              }option2" value="${choices[1]}" name="answer${idx}"> ${
+    choices[1]
+  }</li>
+              <li class="option"><input type="radio" id="question${
+                idx + 1
+              }option3" value="${choices[2]}" name="answer${idx}"> ${
+    choices[2]
+  }</li>
+              <li class="option"><input type="radio" id="question${
+                idx + 1
+              }option4" value="${choices[3]}" name="answer${idx}"> ${
+    choices[3]
+  }</li>
+            </ul>
+          </div>
+    `;
+  questionContainer.insertAdjacentHTML("beforeend", markup);
+});
+
+const input = document.querySelectorAll('[type="radio"]');
+const btn_submit = document.querySelector("#submit");
+const score = document.querySelector("#score");
+const selectedOptions = [];
+
+if (localStorage.getItem("score")) {
+  const pEle = document.createElement("p");
+  pEle.textContent = `Your score is ${localStorage.getItem("score")} out of 5`;
+  score.insertAdjacentElement("beforeend", pEle);
 }
-renderQuestions();
+if (sessionStorage.getItem("progress")) {
+  const arr = sessionStorage.getItem("progress").split(",");
+  arr.forEach((option) => {
+    input.forEach((input) => {
+      if (input.id == option) {
+        input.setAttribute("checked", true);
+      }
+    });
+  });
+}
+input.forEach((input) => {
+  input.addEventListener("change", (e) => {
+    const questionNumber = e.target.id.split("question")[1][0];
+    if (questions[parseInt(questionNumber) - 1].answer == e.target.value) {
+      console.log(
+        questions[parseInt(questionNumber) - 1].answer,
+        e.target.value
+      );
+      totalScore += 1;
+      console.log(totalScore);
+      localStorage.setItem("score", totalScore);
+    }
+    selectedOptions.push(e.target.id);
+    sessionStorage.setItem("progress", selectedOptions);
+  });
+});
+
+btn_submit.addEventListener("click", () => {
+  const pEle = document.createElement("p");
+  pEle.textContent = `Your score is ${totalScore} out of 5`;
+  score.insertAdjacentElement("beforeend", pEle);
+});
