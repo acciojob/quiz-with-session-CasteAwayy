@@ -68,13 +68,11 @@ questions.forEach((question, idx) => {
 
 const input = document.querySelectorAll('[type="radio"]');
 const btn_submit = document.querySelector("#submit");
-const score = document.querySelector("#score");
+const score = document.querySelector("#score p");
 const selectedOptions = [];
 
 if (localStorage.getItem("score")) {
-  const pEle = document.createElement("p");
-  pEle.textContent = `Your score is ${localStorage.getItem("score")} out of 5`;
-  score.insertAdjacentElement("beforeend", pEle);
+  score.textContent = `Your score is ${localStorage.getItem("score")} out of 5`;
 }
 if (sessionStorage.getItem("progress")) {
   const arr = sessionStorage.getItem("progress").split(",");
@@ -104,7 +102,5 @@ input.forEach((input) => {
 });
 
 btn_submit.addEventListener("click", () => {
-  const pEle = document.createElement("p");
-  pEle.textContent = `Your score is ${totalScore} out of 5`;
-  score.insertAdjacentElement("beforeend", pEle);
+  score.textContent = `Your score is ${totalScore} out of 5`;
 });
