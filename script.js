@@ -22,7 +22,7 @@ const questions = [
   },
   {
     question: "Which is the largest planet in our solar system?",
-    choices: ["Earth", "Jupiter", "Mars", "Saturn"],
+    choices: ["Earth", "Jupiter", "Mars", "Pluto"],
     answer: "Jupiter",
   },
   {
@@ -37,7 +37,8 @@ const questionContainer = document.querySelector("#questions");
 
 questions.forEach((question, idx) => {
   const choices = question.choices;
-  let markup = `<div><h1 class="question-heading">${question.question}</h1>
+  let markup = `
+            <h1 class="question-heading">${question.question}</h1>
             <ul class="options">
               <li class="option"><input type="radio" id="question${
                 idx + 1
@@ -60,14 +61,13 @@ questions.forEach((question, idx) => {
     choices[3]
   }</li>
             </ul>
-			</div>
     `;
   questionContainer.insertAdjacentHTML("beforeend", markup);
 });
 
 const input = document.querySelectorAll('[type="radio"]');
 const btn_submit = document.querySelector("#submit");
-const score = document.querySelector("#score span");
+const score = document.querySelector("#score");
 const selectedOptions = [];
 
 if (localStorage.getItem("score")) {
